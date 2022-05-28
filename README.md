@@ -31,6 +31,9 @@ root                    (project root folder)
 
 ## Authors
 Brendon Hamson
+
 Cristian Lopez
+
 Hatsumi Cardenas Godoy
+
 Canteros Romina
