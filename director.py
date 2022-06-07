@@ -7,7 +7,6 @@ class Director:
     """A person who directs the game. 
     
     The responsibility of a Director is to control the sequence of play.
-
     Attributes:
         Word Generator (Word Generator): The game's Word generator.
         is_playing (boolean): Whether or not to keep playing.
@@ -39,17 +38,16 @@ class Director:
 
     def _get_inputs(self):
         """guess the letter from A to Z 
-
         Args:
             self (Director): An instance of Director.
         """
-        guess_letter = self._terminal_service.letter("\nGuess a letter [A-Z: ]")
-        self._.word_generator.get_word_as_list(guess_letter)
+        
+        guess_letter = self._terminal_service.compare_lists("\nGuess a letter [A-Z: ]")
+        self._.word_generator.get_word(guess_letter)
 
     def _do_updates(self):
         ""
         """Keeps watch on where the seeker is moving.
-
         Args:
             self (Director): An instance of Director.
         """
@@ -57,10 +55,10 @@ class Director:
 
     def _do_outputs(self):
         """Provides a hint for the jumper to use.
-
         Args:
             self (Director): An instance of Director.
         """
-        play= self._Jumper.falling_man()
+        play = self._Jumper.falling_man()
         self._terminal_service.compare_lists(play)
+
             
