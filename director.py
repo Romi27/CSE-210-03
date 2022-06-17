@@ -1,6 +1,6 @@
 from terminal_service import Terminal
 from word_generator import Word_Generator
-from jumper import Jumper
+from Jumper import Jumper
 
 
 class Director:
@@ -65,8 +65,6 @@ class Director:
             self._is_playing = False
             self._message = "You found the word!"
 
-
-
     def _do_outputs(self):
         """Provides a hint for the jumper to use.
         Args:
@@ -79,3 +77,4 @@ class Director:
             print(self._jumper.get_jumper())
             print(self._message)
             print("The word was " + self._word.get_word())
+
