@@ -1,4 +1,5 @@
 from director import Director
-
-new_game = Director()
-new_game.start_game()
+def main():
+    new_game = Director()
+    new_game.start_game()
+main()
