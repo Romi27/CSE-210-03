@@ -1,6 +1,6 @@
 from terminal_service import Terminal
 from word_generator import Word_Generator
-from Jumper import Jumper
+from jumper import Jumper
 
 
 class Director:
@@ -20,10 +20,13 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
-        self._word_generator = Word_Generator()
+        self._word = Word_Generator()
+        self._jumper = Jumper()
+        self._terminal = Terminal()
+        self._letter_guess = ""
+        self._guess_is_right = True
         self._is_playing = True
-        self._Jumper = Jumper()
-        self._terminal_service = Terminal()
+        self._message = ""
 
     def start_game(self):
         """Starts the game by running the main game loop.
@@ -31,8 +34,11 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
+        self._terminal.set_word(self._word)
+        self._do_outputs()
         while self._is_playing:
             self._get_inputs()
+            print()
             self._do_updates()
             self._do_outputs()
 
@@ -41,9 +47,7 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        
-        guess_letter = self._terminal_service.compare_lists("\nGuess a letter [A-Z: ]")
-        self._.word_generator.get_word(guess_letter)
+        self._letter_guess = input("Guess a letter [A-Z]: ")
 
     def _do_updates(self):
         ""
@@ -51,14 +55,27 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        self._jumper.get_word_as_list(self._Word_Generator)
+        self._terminal.set_guessed_letter(self._letter_guess)
+        self._guess_is_right = self._terminal.get_guess()
+        self._jumper.set_guess(self._guess_is_right)
+        if self._jumper.get_condition() == False:
+            self._is_playing = False
+            self._message = "Game over"
+        elif self._terminal.get_condition() == True:
+            self._is_playing = False
+            self._message = "You found the word!"
+
+
 
     def _do_outputs(self):
         """Provides a hint for the jumper to use.
         Args:
             self (Director): An instance of Director.
         """
-        play = self._Jumper.falling_man()
-        self._terminal_service.compare_lists(play)
-
-            
+        if self._is_playing == True:
+            print(self._jumper.get_jumper())
+            print(self._terminal.get_hidden_word())
+        elif self._is_playing == False:
+            print(self._jumper.get_jumper())
+            print(self._message)
+            print("The word was " + self._word.get_word())
